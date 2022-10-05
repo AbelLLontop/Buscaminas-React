@@ -3,33 +3,38 @@ import { Nivel, nivels } from "../constans/nivels";
 import { CellMap } from "../utils/generateCellsMap";
 import {
   cellAction,
-  CellActionKind, 
+  CellActionKind,
   cellReducer,
   CellState,
-} from "./CellsContext"; 
+} from "./CellsContext";
 
 interface MyContext {
   cells: CellMap;
   level: Nivel;
-  dispatch: React.Dispatch<cellAction>
+  finalize: boolean;
 }
+
 export const CellContext = createContext<MyContext>({
   cells: new Map(),
   level: nivels.normal,
-  dispatch: () => null,
+  finalize: false,
 });
+export const CellContextDispatch = createContext<React.Dispatch<cellAction>>(
+  () => null
+);
 
 const initialCells: CellState = {
-  firstClick:false,
-  finalize:false,
+  firstClick: false,
+  finalize: false,
   cells: new Map(),
-  level: nivels.normal
+  level: nivels.normal,
 };
 
-
 const CellProvider = ({ children }: { children: JSX.Element }) => {
-  const [{cells,level}, dispatch] = useReducer(cellReducer, initialCells);
-  const { Provider } = CellContext;
+  const [{ cells, level, finalize }, dispatch] = useReducer(
+    cellReducer,
+    initialCells
+  );
   useEffect(() => {
     dispatch({
       type: CellActionKind.RESET_CELLS,
@@ -39,7 +44,13 @@ const CellProvider = ({ children }: { children: JSX.Element }) => {
     });
   }, []);
 
-  return <Provider value={{ cells,level, dispatch }}>{children}</Provider>;
+  return (
+    <CellContextDispatch.Provider value={dispatch}>
+      <CellContext.Provider value={{ cells, level, finalize }}>
+        {children}
+      </CellContext.Provider>
+    </CellContextDispatch.Provider>
+  );
 };
 
 export default CellProvider;

@@ -7,26 +7,26 @@ import {
 } from "./GridContext"; 
 
 interface MyContext {
-  modo: Modo;
+  modo: Modo; 
   dispatch: React.Dispatch<GridAction>
 }
 export const GridContext = createContext<MyContext>({
-  modo: modos.panal, 
+  modo: modos.panal,
   dispatch: () => null,
 });
 
 
 const initialGrids: GridState = { 
-  modo:modos.panal
+  modo:modos.panal,
+  stateModal:false
 };
 
 
 const GridProvider = ({ children }: { children: JSX.Element }) => {
   const [{modo}, dispatch] = useReducer(GridReducer, initialGrids);
-  const { Provider } = GridContext;
-  
+  console.log(modo)
 
-  return <Provider value={{ modo, dispatch }}>{children}</Provider>;
+  return <GridContext.Provider value={{ modo, dispatch }}>{children}</GridContext.Provider>;
 };
 
 export default GridProvider;

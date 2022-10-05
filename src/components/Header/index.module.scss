@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+  position: relative;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  
+  .header{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    div,h1{
+      flex-grow: 1;
+      width: 100%;
+      text-align: center;
+    }
+    .title{
+      font-size: 32px;
+      margin: 0;
+    }
+  }
+  .title,
+  .modeGame {
+    color: white;
+  }
+  .modeGame {
+    font-size: 16px;
+    font-weight: bold;
+  }
+}

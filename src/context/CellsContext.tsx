@@ -28,7 +28,7 @@ const openCell = (state: CellState,action: cellAction,status: STATUS_CELL): Cell
   const cell: ICell = action.payload;
   const newState = { ...state };
 
-  if (!state.firstClick) {
+  if (!newState.firstClick) {
     cells = generateCellWithMinesAndNumbers(
       state.cells,
       state.level.mines,

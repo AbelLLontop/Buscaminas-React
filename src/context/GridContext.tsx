@@ -2,14 +2,15 @@ import { Modo } from "../constans/modos";
 
 
 export enum GridActionKind {
-  CHANGE_MODE
+  CHANGE_MODE,
 } 
 export interface GridAction {
   type: GridActionKind;
   payload: any ;
 }
 export interface GridState {
-  modo:Modo
+  modo:Modo,
+  stateModal:boolean
 }
 
 
