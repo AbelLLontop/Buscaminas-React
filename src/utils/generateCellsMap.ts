@@ -136,3 +136,10 @@ export const explotar = (cells: CellMap, currentCell: ICell) => {
     }
   }
 };
+
+export const validateWin = (cells: CellMap,numMines:number) => {
+  const cellsOpen = [...cells.values()].filter(
+    (cell) => cell.status === STATUS_CELL.OPEN
+  );
+  return cellsOpen.length === cells.size-numMines;
+}

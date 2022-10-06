@@ -5,6 +5,7 @@ import {
   explotar,
   generateCells,
   generateCellWithMinesAndNumbers,
+  validateWin,
 } from "../utils/generateCellsMap";
 
 export enum CellActionKind {
@@ -39,6 +40,13 @@ const openCell = (state: CellState,action: cellAction,status: STATUS_CELL): Cell
   if (!newState.finalize) {
     if (cell.mine == STATUS_MINE.INACTIVE) {
       explotar(cells, cell);
+      if(validateWin(cells,newState.level.mines)){
+        for (let [key, value] of cells) {
+          if (value.mine == STATUS_MINE.ACTIVE) {
+            cells.set(key, { ...value, status: STATUS_CELL.MARKED });
+          }
+        }
+      }
     } else {
       newState.finalize = true;
       for (let [key, value] of cells) {

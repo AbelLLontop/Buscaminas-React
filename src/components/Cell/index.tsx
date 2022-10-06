@@ -2,7 +2,7 @@ import { memo,useContext} from "react";
 import { CellContextDispatch } from "../../context/CellProvider";
 import { CellActionKind } from "../../context/CellsContext";
 import { GridContext } from "../../context/GridProvider";
-import { ICell, STATUS_CELL } from "../../interfaces/ICell";
+import { ICell, STATUS_CELL, STATUS_MINE } from "../../interfaces/ICell";
 import { selectContent, switchColors } from "./utils/utilsCell";
 import styles from "./index.module.scss";
  
@@ -25,7 +25,7 @@ const Cell = ({ cell }: { cell: ICell }) => {
   return (
       <div
         style={switchColors(cell,modo)}
-        className={styles.cell}
+        className={ `${styles.cell} ${cell.status == STATUS_CELL.CLOSED?styles.hover:""} ${cell.status == STATUS_CELL.OPEN &&  cell.mine==STATUS_MINE.ACTIVE?styles.animRed:''}`}
         onClick={handleCLick}
         onAuxClick={handleAuxClick}
       >
