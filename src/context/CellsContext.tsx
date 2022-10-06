@@ -1,5 +1,5 @@
 import { Nivel } from "../constans/nivels";
-import { ICell, STATUS_CELL, STATUS_MINE } from "../interfaces/ICell";
+import { ICell, STATUS_CELL, STATUS_GAME, STATUS_MINE } from "../interfaces/ICell";
 import {
   CellMap,
   explotar,
@@ -14,14 +14,14 @@ export enum CellActionKind {
   RESET_CELLS,
 }
 export interface cellAction {
-  type: CellActionKind;
+  type: CellActionKind; 
   payload: any;
 }
 export interface CellState {
   cells: CellMap;
   firstClick: boolean;
   level: Nivel;
-  finalize: boolean;
+  stateGame:STATUS_GAME;
 }
 
 const openCell = (state: CellState,action: cellAction,status: STATUS_CELL): CellState => {
@@ -37,18 +37,20 @@ const openCell = (state: CellState,action: cellAction,status: STATUS_CELL): Cell
     );
     newState.firstClick = true;
   }
-  if (!newState.finalize) {
+  
+  if (newState.stateGame == STATUS_GAME.PLAYING) {
     if (cell.mine == STATUS_MINE.INACTIVE) {
       explotar(cells, cell);
       if(validateWin(cells,newState.level.mines)){
+        newState.stateGame = STATUS_GAME.WIN;
         for (let [key, value] of cells) {
           if (value.mine == STATUS_MINE.ACTIVE) {
-            cells.set(key, { ...value, status: STATUS_CELL.MARKED });
+            cells.set(key, { ...value, status: STATUS_CELL.INACTIVE });
           }
         }
       }
     } else {
-      newState.finalize = true;
+      newState.stateGame = STATUS_GAME.LOSE;
       for (let [key, value] of cells) {
         if (value.mine == STATUS_MINE.ACTIVE) {
           cells.set(key, { ...value, status: STATUS_CELL.OPEN });
@@ -86,7 +88,7 @@ const resetCells = (action: cellAction): CellState => {
     firstClick: false,
     cells,
     level,
-    finalize: false,
+    stateGame:STATUS_GAME.PLAYING,
   };
 };
 

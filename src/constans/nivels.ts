@@ -14,7 +14,7 @@ export const nivels:INivels = {
   normal :{
     rows: 9, 
     columns: 9,
-    mines: 10,
+    mines: 1,
     size:3,
     
   },

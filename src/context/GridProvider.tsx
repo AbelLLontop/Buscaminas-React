@@ -24,7 +24,6 @@ const initialGrids: GridState = {
 
 const GridProvider = ({ children }: { children: JSX.Element }) => {
   const [{modo}, dispatch] = useReducer(GridReducer, initialGrids);
-  console.log(modo)
 
   return <GridContext.Provider value={{ modo, dispatch }}>{children}</GridContext.Provider>;
 };

@@ -1,6 +1,8 @@
 import { useContext } from 'react'
 import { ModalActionKind } from '../../context/ModalContext';
 import { ModalContext } from '../../context/ModalProvider';
+import {AiFillSetting} from 'react-icons/ai'
+import styles from './OpenModalConfig.module.scss'
 
 const OpenModalConfig = () => {
     const {dispatch} = useContext(ModalContext);
@@ -16,7 +18,9 @@ const OpenModalConfig = () => {
     }
   
     return (
-    <button onClick={openModal}>OpenModalConfig</button>
+        <div onClick={openModal} className={styles.button}>
+    <AiFillSetting/>Settings
+        </div>
   )
 }
 

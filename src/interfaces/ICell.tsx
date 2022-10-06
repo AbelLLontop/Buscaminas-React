@@ -1,3 +1,9 @@
+export enum STATUS_GAME{
+    PLAYING,
+    WIN,
+    LOSE
+}
+
 export enum STATUS_CELL{
     OPEN,
     CLOSED,

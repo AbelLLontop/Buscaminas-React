@@ -55,11 +55,7 @@ const ModalConfig = () => {
         <h4>SETTINGS</h4>
         <p>¡Modos!</p>
         <div className={styles.container_btn}>
-          <button onClick={() => resetCells(modos.panal)}>Modo Panal 🐝</button>
-          <button onClick={() => resetCells(modos.frozen)}>
-            Modo Pingui! 🐧
-          </button>
-          <button onClick={() => resetCells(modos.toxico)}>Modo Toxic!☢</button>
+          {Object.values(modos).map((modo:Modo) => (<button key={modo.titulo} onClick={() => resetCells(modo)}>{modo.titulo}</button>))}
         </div>
         <p>¡Cambiar Nivel!</p>
         <div className={styles.container_btn}>

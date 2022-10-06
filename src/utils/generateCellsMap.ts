@@ -100,7 +100,6 @@ export const generateCellWithMinesAndNumbers = (
 ) => {
   const cellsWithMines = generateCellWithMines(emptyCells, mines, firtPosition);
   const cellsWithNumbers = assignNumbersToCells(cellsWithMines);
-  console.log("se temrino de ejecutar");
   return cellsWithNumbers;
 };
 
@@ -115,26 +114,28 @@ export const explotar = (cells: CellMap, currentCell: ICell) => {
     ...currentCell,
     status: STATUS_CELL.OPEN,
   });
-
-  for (let [x, y] of listVecinos) {
-    const id = `${x},${y}`;
-
-    if (cells.has(id)) {
-      const cell = cells.get(id)!!;
-      if (cell.status === STATUS_CELL.CLOSED) {
-        if (cell.content == 0 && cell.mine === STATUS_MINE.INACTIVE) {
-          explotar(cells, cell);
-        } else {
-          if (cell.mine === STATUS_MINE.INACTIVE) {
-            cells.set(id, {
-              ...cell,
-              status: STATUS_CELL.OPEN,
-            });
+  if(currentCell.content === 0){
+    for (let [x, y] of listVecinos) {
+      const id = `${x},${y}`;
+  
+      if (cells.has(id)) {
+        const cell = cells.get(id)!!;
+        if (cell.status === STATUS_CELL.CLOSED) {
+          if (cell.content == 0 && cell.mine === STATUS_MINE.INACTIVE) {
+            explotar(cells, cell);
+          } else {
+            if (cell.mine === STATUS_MINE.INACTIVE) {
+              cells.set(id, {
+                ...cell,
+                status: STATUS_CELL.OPEN,
+              });
+            }
           }
         }
       }
     }
   }
+  
 };
 
 export const validateWin = (cells: CellMap,numMines:number) => {

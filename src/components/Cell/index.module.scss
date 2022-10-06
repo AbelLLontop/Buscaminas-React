@@ -21,21 +21,35 @@
 .animRed {
   animation: animRed 1s ease-out;
   animation-iteration-count: infinite;
-  position: relative;
+  z-index: 9!important;
+}
+.animWin{
+  animation: animWin 1s ease-out;
+  animation-iteration-count: infinite;
 }
 
 
-@keyframes animRed {
+@keyframes animWin {
   0% {
-    box-shadow: rgba(255, 0, 0, 0.51) 0px 0px 0px 4px;
     transform: rotate(0deg);
   }
   20% {
+    transform: rotate(0deg) scale(1.2);
+  }
+  100% {
+    transform: rotate(-360deg) scale(1);
+}
+}
+@keyframes animRed {
+  0% {
+    box-shadow: rgba(255, 0, 0, 0.51) 0px 0px 0px 2px;
+  }
+  20% {
     box-shadow: rgba(255, 0, 0, 0.51) 0px 0px 0px 8px;
-    transform: rotate(0deg);
+    transform: scale(1.2);
   }
   100% {
     box-shadow: rgba(255, 0, 0, 0) 0px 0px 0px 0px;
-    transform: rotate(-360deg);
+    transform:  scale(1);
 }
 }

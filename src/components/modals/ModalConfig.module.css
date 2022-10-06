@@ -56,4 +56,5 @@
     align-items: center;
     display: flex;
     transition: all ease .4s;
+    z-index: 9;
 }

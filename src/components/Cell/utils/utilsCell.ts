@@ -1,5 +1,7 @@
 import { Modo } from "./../../../constans/modos";
 import { ICell, STATUS_CELL, STATUS_MINE } from "./../../../interfaces/ICell";
+
+
 export const switchColors = (cell: ICell, modo: Modo) => {
   if (cell.status == STATUS_CELL.OPEN) {
     if (cell.content == 0 && cell.mine == STATUS_MINE.INACTIVE) {
@@ -22,7 +24,7 @@ export const selectContent = (cell: ICell, modo: Modo): string => {
     return modo.icon.mine;
   }
 
-  if (cell.status == STATUS_CELL.MARKED) {
+  if (cell.status == STATUS_CELL.MARKED || cell.status==STATUS_CELL.INACTIVE) {
     return modo.icon.flag;
   }
   if (cell.status == STATUS_CELL.CLOSED) {

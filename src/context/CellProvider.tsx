@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useReducer } from "react";
 import { Nivel, nivels } from "../constans/nivels";
+import { STATUS_GAME } from "../interfaces/ICell";
 import { CellMap } from "../utils/generateCellsMap";
 import {
   cellAction,
@@ -11,13 +12,13 @@ import {
 interface MyContext {
   cells: CellMap;
   level: Nivel;
-  finalize: boolean;
+  stateGame:STATUS_GAME;
 }
 
 export const CellContext = createContext<MyContext>({
   cells: new Map(),
   level: nivels.normal,
-  finalize: false,
+  stateGame:STATUS_GAME.PLAYING
 });
 export const CellContextDispatch = createContext<React.Dispatch<cellAction>>(
   () => null
@@ -25,13 +26,13 @@ export const CellContextDispatch = createContext<React.Dispatch<cellAction>>(
 
 const initialCells: CellState = {
   firstClick: false,
-  finalize: false,
+  stateGame:STATUS_GAME.PLAYING,
   cells: new Map(),
   level: nivels.normal,
 };
 
 const CellProvider = ({ children }: { children: JSX.Element }) => {
-  const [{ cells, level, finalize }, dispatch] = useReducer(
+  const [{ cells, level, stateGame }, dispatch] = useReducer(
     cellReducer,
     initialCells
   );
@@ -46,7 +47,7 @@ const CellProvider = ({ children }: { children: JSX.Element }) => {
 
   return (
     <CellContextDispatch.Provider value={dispatch}>
-      <CellContext.Provider value={{ cells, level, finalize }}>
+      <CellContext.Provider value={{ cells, level, stateGame }}>
         {children}
       </CellContext.Provider>
     </CellContextDispatch.Provider>

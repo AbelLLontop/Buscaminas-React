@@ -5,6 +5,7 @@ import { GridContext } from "../../context/GridProvider";
 import { ICell, STATUS_CELL, STATUS_MINE } from "../../interfaces/ICell";
 import { selectContent, switchColors } from "./utils/utilsCell";
 import styles from "./index.module.scss";
+
  
 const Cell = ({ cell }: { cell: ICell }) => {
    const { modo} = useContext(GridContext)!!;
@@ -25,7 +26,7 @@ const Cell = ({ cell }: { cell: ICell }) => {
   return (
       <div
         style={switchColors(cell,modo)}
-        className={ `${styles.cell} ${cell.status == STATUS_CELL.CLOSED?styles.hover:""} ${cell.status == STATUS_CELL.OPEN &&  cell.mine==STATUS_MINE.ACTIVE?styles.animRed:''}`}
+        className={ `${styles.cell} ${cell.status == STATUS_CELL.CLOSED?styles.hover:""} ${cell.status==STATUS_CELL.INACTIVE?styles.animWin:''} ${cell.status == STATUS_CELL.OPEN &&  cell.mine==STATUS_MINE.ACTIVE?styles.animRed:''}`}
         onClick={handleCLick}
         onAuxClick={handleAuxClick}
       >
