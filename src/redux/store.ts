@@ -9,6 +9,7 @@ export const store = configureStore({
         grid:gridReducer,
         modal:modalReducer
     },  
+    devTools:false
 })
 
 export type RootState = ReturnType<typeof store.getState>
