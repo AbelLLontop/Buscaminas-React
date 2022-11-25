@@ -23,3 +23,4 @@ export const ModalReducer = (state: ModalState, action: ModalAction) => {
     }
  
 };
+ 

@@ -1,4 +1,4 @@
-import { ICell, STATUS_CELL, STATUS_MINE } from "./../interfaces/ICell";
+import { ICell, STATUS_CELL, STATUS_MINE } from "../interfaces/game/ICell";
 
 export type CellMap = Map<string, ICell>;
 

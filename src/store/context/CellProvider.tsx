@@ -1,11 +1,12 @@
 import React, { createContext, useEffect, useReducer } from "react";
-import { Nivel, nivels } from "../constans/nivels";
-import { STATUS_GAME } from "../interfaces/ICell";
-import { CellMap } from "../utils/generateCellsMap";
+import { CellMap } from "../../interfaces/game/ICell";
+import { STATUS_GAME } from "../../interfaces/game/IGame";
+import { Nivel } from "../../interfaces/game/INivel";
+import { nivels } from "../../constans/nivels";
+import { cellReducer } from '../reducers/cellReducer';
 import {
   cellAction,
   CellActionKind,
-  cellReducer,
   CellState,
 } from "./CellsContext";
 

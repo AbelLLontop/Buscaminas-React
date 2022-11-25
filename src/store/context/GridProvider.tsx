@@ -1,12 +1,12 @@
 import React, {createContext, useReducer } from "react";
-import { Modo, modos } from "../constans/modos";
+import { Modo, modos } from "../../constans/modos";
 import {
   GridAction,
   GridReducer,
   GridState,
 } from "./GridContext"; 
 
-interface MyContext {
+interface MyContext { 
   modo: Modo; 
   dispatch: React.Dispatch<GridAction>
 }
@@ -20,7 +20,6 @@ const initialGrids: GridState = {
   modo:modos.panal,
   stateModal:false
 };
-
 
 const GridProvider = ({ children }: { children: JSX.Element }) => {
   const [{modo}, dispatch] = useReducer(GridReducer, initialGrids);

@@ -1,46 +1,29 @@
-import { useContext} from "react";
 import styles from "./ModalConfig.module.css";
 import { createPortal } from "react-dom";
-import { CellContextDispatch } from "../../context/CellProvider";
-import { GridContext } from "../../context/GridProvider";
 import { Modo, modos } from "../../constans/modos";
-import { Nivel, nivels } from "../../constans/nivels";
-import { GridActionKind } from "../../context/GridContext";
-import { CellActionKind } from "../../context/CellsContext";
-import { ModalContext } from "../../context/ModalProvider";
-import { ModalActionKind } from "../../context/ModalContext";
+import { nivels } from "../../constans/nivels";
+import { Nivel } from "../../interfaces/game/INivel";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { changeModeGrid } from "../../redux/features/grid/gridSlice";
+import { resetCell } from "../../redux/features/game/gameSlice";
+import { closedModal } from "../../redux/features/modal/modalSlice";
 const portal = document.getElementById("root-portal2")!!;
 
 const ModalConfig = () => {
-  const dispatch = useContext(CellContextDispatch);
-  const { dispatch: gridDispatch } = useContext(GridContext);
-  const { dispatch: modalDispatch, stateModal } = useContext(ModalContext);
+  const dispatch = useDispatch();
+  const stateModal = useSelector((state: RootState) => state.modal.stateModal);
 
-  const resetCells = (modo: Modo) => {
-    gridDispatch({
-      type: GridActionKind.CHANGE_MODE,
-      payload: {
-        modo: modo,
-      },
-    });
+  const handleResetCells = (modo: Modo) => {
+    dispatch(changeModeGrid(modo));
   };
 
-  const resetNivel = (nivel: Nivel) => {
-    dispatch({
-      type: CellActionKind.RESET_CELLS,
-      payload: {
-        level: nivel,
-      },
-    });
+  const handleResetNivel = (nivel: Nivel) => {
+    dispatch(resetCell(nivel));
   };
 
-  const closeModal = () => {
-    modalDispatch({
-      type: ModalActionKind.CHANGE_STATE_MODAL,
-      payload: {
-        stateModal: false,
-      },
-    });
+  const handlecloseModal = () => {
+    dispatch(closedModal());
   };
 
   return createPortal(
@@ -55,19 +38,25 @@ const ModalConfig = () => {
         <h4>SETTINGS</h4>
         <p>¡Modos!</p>
         <div className={styles.container_btn}>
-          {Object.values(modos).map((modo:Modo) => (<button key={modo.titulo} onClick={() => resetCells(modo)}>{modo.titulo}</button>))}
+          {Object.values(modos).map((modo: Modo) => (
+            <button key={modo.titulo} onClick={() => handleResetCells(modo)}>
+              {modo.titulo}
+            </button>
+          ))}
         </div>
         <p>¡Cambiar Nivel!</p>
         <div className={styles.container_btn}>
-          <button onClick={() => resetNivel(nivels.normal)}>
+          <button onClick={() => handleResetNivel(nivels.normal)}>
             Principiante
           </button>
-          <button onClick={() => resetNivel(nivels.intermedio)}>
+          <button onClick={() => handleResetNivel(nivels.intermedio)}>
             Intermedio
           </button>
-          <button onClick={() => resetNivel(nivels.avanzado)}>Avanzado</button>
+          <button onClick={() => handleResetNivel(nivels.avanzado)}>
+            Avanzado
+          </button>
         </div>
-        <button className={styles.closed} onClick={closeModal}>
+        <button className={styles.closed} onClick={handlecloseModal}>
           Cerrar
         </button>
       </section>

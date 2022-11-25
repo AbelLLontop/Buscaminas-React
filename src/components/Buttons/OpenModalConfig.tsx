@@ -1,27 +1,22 @@
-import { useContext } from 'react'
-import { ModalActionKind } from '../../context/ModalContext';
-import { ModalContext } from '../../context/ModalProvider';
-import {AiFillSetting} from 'react-icons/ai'
-import styles from './OpenModalConfig.module.scss'
+import { AiFillSetting } from "react-icons/ai";
+import styles from "./OpenModalConfig.module.scss";
+import { useDispatch } from "react-redux";
+import { openModal } from "../../redux/features/modal/modalSlice";
 
 const OpenModalConfig = () => {
-    const {dispatch} = useContext(ModalContext);
-  
-    const openModal = ()=>{
-        console.log("clickeando");
-        dispatch({
-            type:ModalActionKind.CHANGE_STATE_MODAL,
-            payload:{
-                stateModal:true
-            }
-        })
-    }
-  
-    return (
-        <div onClick={openModal} className={styles.button}>
-    <AiFillSetting/>Settings
-        </div>
-  )
-}
+  const dispatch = useDispatch();
 
-export default OpenModalConfig
+  const handleOpenModal = () => {
+    console.log("clickeando");
+    dispatch(openModal());
+  };
+
+  return (
+    <div onClick={handleOpenModal} className={styles.button}>
+      <AiFillSetting />
+      Settings
+    </div>
+  );
+};
+
+export default OpenModalConfig;

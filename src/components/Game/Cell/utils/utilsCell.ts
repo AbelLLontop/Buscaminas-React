@@ -1,5 +1,5 @@
-import { Modo } from "./../../../constans/modos";
-import { ICell, STATUS_CELL, STATUS_MINE } from "./../../../interfaces/ICell";
+import { Modo } from "../../../../constans/modos";
+import { ICell, STATUS_CELL, STATUS_MINE } from "../../../../interfaces/game/ICell";
 
 
 export const switchColors = (cell: ICell, modo: Modo) => {

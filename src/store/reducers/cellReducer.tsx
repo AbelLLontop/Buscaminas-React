@@ -1,30 +1,23 @@
-import { Nivel } from "../constans/nivels";
-import { ICell, STATUS_CELL, STATUS_GAME, STATUS_MINE } from "../interfaces/ICell";
 import {
-  CellMap,
+  ICell,
+  STATUS_CELL,
+  STATUS_MINE,
+} from "../../interfaces/game/ICell";
+import { STATUS_GAME } from "../../interfaces/game/IGame";
+import { Nivel } from "../../interfaces/game/INivel";
+import {
   explotar,
   generateCells,
   generateCellWithMinesAndNumbers,
   validateWin,
-} from "../utils/generateCellsMap";
+} from "../../services/generateCellsMap";
+import { cellAction, CellActionKind, CellState } from "../context/CellsContext";
 
-export enum CellActionKind {
-  OPEN_CELL,
-  MARK_CELL,
-  RESET_CELLS,
-}
-export interface cellAction {
-  type: CellActionKind; 
-  payload: any;
-}
-export interface CellState {
-  cells: CellMap;
-  firstClick: boolean;
-  level: Nivel;
-  stateGame:STATUS_GAME;
-}
-
-const openCell = (state: CellState,action: cellAction,status: STATUS_CELL): CellState => {
+const openCell = ( 
+  state: CellState,
+  action: cellAction,
+  status: STATUS_CELL
+): CellState => {
   let cells = new Map(state.cells);
   const cell: ICell = action.payload;
   const newState = { ...state };
@@ -37,11 +30,11 @@ const openCell = (state: CellState,action: cellAction,status: STATUS_CELL): Cell
     );
     newState.firstClick = true;
   }
-  
+
   if (newState.stateGame == STATUS_GAME.PLAYING) {
     if (cell.mine == STATUS_MINE.INACTIVE) {
       explotar(cells, cell);
-      if(validateWin(cells,newState.level.mines)){
+      if (validateWin(cells, newState.level.mines)) {
         newState.stateGame = STATUS_GAME.WIN;
         for (let [key, value] of cells) {
           if (value.mine == STATUS_MINE.ACTIVE) {
@@ -88,16 +81,16 @@ const resetCells = (action: cellAction): CellState => {
     firstClick: false,
     cells,
     level,
-    stateGame:STATUS_GAME.PLAYING,
+    stateGame: STATUS_GAME.PLAYING,
   };
-};
+}; 
 
 export const cellReducer = (state: CellState, action: cellAction) => {
   switch (action.type) {
     case CellActionKind.OPEN_CELL:
       return openCell(state, action, STATUS_CELL.OPEN);
     case CellActionKind.MARK_CELL:
-      return markCell(state, action);
+      return markCell(state, action); 
     case CellActionKind.RESET_CELLS:
       return resetCells(action);
     default:

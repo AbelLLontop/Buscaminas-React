@@ -1,23 +1,19 @@
-import { useContext } from "react";
 import { createPortal } from "react-dom";
-import { Nivel, nivels } from "../../constans/nivels";
-import { CellContext, CellContextDispatch } from "../../context/CellProvider";
-import { CellActionKind } from "../../context/CellsContext";
-import { STATUS_GAME } from "../../interfaces/ICell";
+import { STATUS_GAME } from "../../interfaces/game/IGame";
+import { Nivel } from "../../interfaces/game/INivel";
+import { nivels } from "../../constans/nivels";
 import styles from "./ModalFinishGame.module.css";
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from "../../redux/store";
+import { resetCell } from "../../redux/features/game/gameSlice";
 const portal = document.getElementById("root-portal")!!;
 
 const Modal = () => {
-  const { stateGame } = useContext(CellContext);
-  const dispatch = useContext(CellContextDispatch);
+ const stateGame =  useSelector((state:RootState)=>state.game.stateGame);
+  const dispatch = useDispatch();
 
   const resetNivel = (nivel: Nivel) => {
-    dispatch({
-      type: CellActionKind.RESET_CELLS,
-      payload: {
-        level: nivel,
-      },
-    });
+    dispatch( resetCell(nivel));
   };
 
   return createPortal(

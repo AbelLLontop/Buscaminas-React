@@ -1,4 +1,4 @@
-import { Modo } from "../constans/modos";
+import { Modo } from "../../constans/modos";
 
 
 export enum GridActionKind {

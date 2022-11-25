@@ -1,8 +1,4 @@
-export enum STATUS_GAME{
-    PLAYING,
-    WIN,
-    LOSE
-}
+export type CellMap = Map<string, ICell>;
 
 export enum STATUS_CELL{
     OPEN,
@@ -24,4 +20,3 @@ export interface ICell{
     posX:number,
     posY:number
 }
-  
