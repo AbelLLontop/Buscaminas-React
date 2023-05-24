@@ -5,6 +5,7 @@ export type Mode = {
     normal: {};
     open: {};
     empty: {};
+    check:{}
     icon: {
       mine: string;
       flag: string;

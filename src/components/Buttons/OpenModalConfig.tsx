@@ -7,7 +7,6 @@ const OpenModalConfig = () => {
   const dispatch = useDispatch();
 
   const handleOpenModal = () => {
-    console.log("clickeando");
     dispatch(openModal());
   };
 
